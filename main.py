@@ -240,26 +240,32 @@ class NewPost(Handler):
             self.redirect("/login")
 
     def post(self):
-        subject = self.request.get("subject")
-        content = self.request.get("content").replace('\n', '<br>')
-        user_id = User.by_name(self.user.name)
+        if self.user:
 
-        if subject and content:
-            a = Blog(
-                parent=blog_key(),
-                subject=subject,
-                content=content,
-                user=user_id)
-            a.put()
-            self.redirect('/post/%s' % str(a.key().id()))
+            subject = self.request.get("subject")
+            content = self.request.get("content").replace('\n', '<br>')
+            user_id = User.by_name(self.user.name)
+
+            if subject and content:
+                a = Blog(
+                    parent=blog_key(),
+                    subject=subject,
+                    content=content,
+                    user=user_id)
+                a.put()
+                self.redirect('/post/%s' % str(a.key().id()))
+
+            else:
+                post_error = "Please enter a subject and the blog content"
+                self.render(
+                    "newpost.html",
+                    subject=subject,
+                    content=content,
+                    post_error=post_error)
 
         else:
-            post_error = "Please enter a subject and the blog content"
-            self.render(
-                "newpost.html",
-                subject=subject,
-                content=content,
-                post_error=post_error)
+            self.redirect("/login")
+
 
 #The post individual page
 class PostPage(Handler):

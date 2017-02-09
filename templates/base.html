@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/style.css" rel="stylesheet">
+        <title>Ron's blog</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <div class="navbar-header">
+                            <a href="/"><h3>Ron's</h3></a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            {% if not user %}
+                                <li><a style="color:white" href="/login">Login</a></li>
+                                <li><a style="color:white" href="/signup">Register</a></li>
+                            {% elif user %}
+                                <li><a style="color:white" href="/newpost">New Post</a></li>
+                                <li><a style="color:white" href="/logout">Logout</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
